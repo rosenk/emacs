@@ -24,14 +24,15 @@
 ;; load a default theme
 (load-theme 'misterioso)
 
-(tool-bar-mode 0)
-(menu-bar-mode 0)
-(scroll-bar-mode 0)
-(column-number-mode 1)
-(global-set-key [f12] 'menu-bar-mode)
-
-;; start frames maximized
-(toggle-frame-maximized)
+;; frame
+(use-package frame
+  :config
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  (tool-bar-mode 0)
+  (menu-bar-mode 0)
+  (scroll-bar-mode 0)
+  (column-number-mode 1)
+  :bind ([f12] . menu-bar-mode))
 
 ;; guide-key
 (use-package guide-key
@@ -54,7 +55,7 @@
   :ensure t
   :bind ("M-x" . helm-M-x)
   :config
-   (setq helm-M-x-fuzzy-match 1))
+  (setq helm-M-x-fuzzy-match t))
 
 ;; helm-themes
 (use-package helm-themes
