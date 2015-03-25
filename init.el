@@ -1,4 +1,10 @@
+;;; init.el --- Simple config
+
+;;; Commentary:
+
 (require 'package) ;; You might already have this line
+
+;;; Code:
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize) ;; You might already have this line
@@ -13,7 +19,6 @@
   (require 'use-package))
 (require 'diminish)                ;; if you use :diminish
 (require 'bind-key)                ;; if you use any :bind variant
-
 
 
 ;; load a default theme
@@ -68,11 +73,15 @@
   :ensure t
   :init (flx-ido-mode 1))
 
-;; c-c++
-(add-hook 'c-mode-hook 'linum-mode) 
-(add-hook 'c++-mode-hook 'linum-mode)
-(add-hook 'c-mode-hook 'flycheck-mode)
-(add-hook 'c++-mode-hook 'flycheck-mode)
+;; programming
+(use-package linum
+  :config
+  (add-hook 'prog-mode-hook 'linum-mode))
+
+(use-package flycheck
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook 'flycheck-mode))
 
 (use-package windmove
   :init (windmove-default-keybindings 'meta))
@@ -107,8 +116,9 @@
   :init (global-auto-revert-mode 1))
 
 (use-package hl-line
-  :init (global-hl-line-mode 1)
-  :config (set-face-background 'hl-line "#073642"))
+  :config
+  (add-hook 'prog-mode-hook 'hl-line-mode)
+  (set-face-background 'hl-line "#073642"))
 
 
 (custom-set-variables
@@ -123,3 +133,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(provide 'init)
+;;; init.el ends here
