@@ -21,12 +21,11 @@
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
+(column-number-mode 1)
 (global-set-key [f12] 'menu-bar-mode)
 
 ;; start frames maximized
 (toggle-frame-maximized)
-
-(global-auto-revert-mode t)
 
 ;; guide-key
 (use-package guide-key
@@ -44,24 +43,29 @@
   :ensure t
   :bind ([f8] . neotree-toggle))
 
-
 ;; helm-M-x
 (use-package helm
   :ensure t
-  :bind ("M-x" . helm-M-x))
+  :bind ("M-x" . helm-M-x)
+  :config
+   (setq helm-M-x-fuzzy-match 1))
 
 ;; helm-themes
 (use-package helm-themes
   :ensure t
   :bind ("C-x t" . helm-themes))
 
-(require 'flx-ido)
-(ido-mode 1)
-(ido-everywhere 1)
-(flx-ido-mode 1)
-;; disable ido faces to see flx highlights.
-(setq ido-enable-flex-matching t)
-(setq ido-use-faces nil)
+;; ido and flx-ido
+(use-package ido
+  :init (progn (ido-mode 1)
+			   (ido-everywhere 1))
+  :config
+  (setq ido-enable-flex-matching t
+		ido-use-faces nil))
+
+(use-package flx-ido
+  :ensure t
+  :init (flx-ido-mode 1))
 
 ;; c-c++
 (add-hook 'c-mode-hook 'linum-mode) 
@@ -74,7 +78,10 @@
   :init (windmove-default-keybindings 'meta))
 
 (use-package recentf
-  :config (setq recentf-save-file "~/.emacs.d/.recentf"))
+  :config
+  (setq recentf-save-file "~/.emacs.d/.recentf"
+		recentf-max-saved-items 1000)
+  (recentf-mode))
 
 (use-package magit
   :ensure t
@@ -95,6 +102,13 @@
 (use-package ace-jump-mode
   :ensure t
   :bind ("C-a" . ace-jump-mode))
+
+(use-package autorevert
+  :init (global-auto-revert-mode 1))
+
+(use-package hl-line
+  :init (global-hl-line-mode 1)
+  :config (set-face-background 'hl-line "#073642"))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
