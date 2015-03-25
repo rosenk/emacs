@@ -15,6 +15,7 @@
 (require 'bind-key)                ;; if you use any :bind variant
 
 
+
 ;; load a default theme
 (load-theme 'misterioso)
 
