@@ -73,7 +73,6 @@
 (add-hook 'c-mode-hook 'flycheck-mode)
 (add-hook 'c++-mode-hook 'flycheck-mode)
 
-
 (use-package windmove
   :init (windmove-default-keybindings 'meta))
 
