@@ -28,6 +28,7 @@
 
 (global-auto-revert-mode t)
 
+;; guide-key
 (use-package guide-key
   :ensure t
   :diminish guide-key-mode
@@ -37,18 +38,19 @@
    guide-key/guide-key-sequence '("C-x" "C-c" "C-h")
    guide-key/recursive-key-sequence-flag t
    guide-key/idle-delay 0.2))
-  
+
+;; neotree
 (use-package neotree
   :ensure t
   :bind ([f8] . neotree-toggle))
 
 
 ;; helm-M-x
-;;(global-set-key (kbd "M-x") 'helm-M-x)
 (use-package helm
   :ensure t
   :bind ("M-x" . helm-M-x))
 
+;; helm-themes
 (use-package helm-themes
   :ensure t
   :bind ("C-x t" . helm-themes))
