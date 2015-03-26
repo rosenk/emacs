@@ -84,6 +84,9 @@
   :config
   (add-hook 'prog-mode-hook 'flycheck-mode))
 
+(use-package haskell-mode
+  :ensure t)
+
 (use-package windmove
   :init (windmove-default-keybindings 'meta))
 
