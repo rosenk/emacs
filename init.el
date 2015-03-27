@@ -142,7 +142,9 @@
 						 (list 90 90))))
 
 (use-package projectile
-  :ensure t)
+  :ensure t
+  :config
+  (projectile-global-mode))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
