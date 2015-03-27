@@ -22,7 +22,11 @@
 
 
 ;; load a default theme
-(load-theme 'misterioso)
+(use-package color-theme-sanityinc-solarized
+  :ensure t
+  :init
+  (load-theme 'sanityinc-solarized-light t))
+
 
 ;; frame
 (use-package frame
@@ -33,6 +37,8 @@
   (scroll-bar-mode 0)
   (column-number-mode 1)
   :bind ([f12] . menu-bar-mode))
+
+(auto-save-mode 0)
 
 ;; guide-key
 (use-package guide-key
@@ -121,15 +127,31 @@
 
 (use-package hl-line
   :config
-  (add-hook 'prog-mode-hook 'hl-line-mode)
-  (set-face-background 'hl-line "#073642"))
+  (add-hook 'prog-mode-hook 'hl-line-mode))
 
+(defun toggle-transparency ()
+  "Toggle between transparent or opaque display."
+  (interactive)
+  ;; Define alpha if it's nil
+  (if (eq (frame-parameter (selected-frame) 'alpha) nil)
+	  (set-frame-parameter (selected-frame) 'alpha '(100 100)))
+  ;; Do the actual toggle
+  (if (/= (cadr (frame-parameter (selected-frame) 'alpha)) 100)
+	  (set-frame-parameter (selected-frame) 'alpha '(100 100))
+	(set-frame-parameter (selected-frame) 'alpha
+						 (list 90 90))))
+
+(use-package projectile
+  :ensure t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(blink-cursor-mode nil)
+ '(cursor-type (quote bar))
+ '(inhibit-startup-screen t)
  '(tab-width 4))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
