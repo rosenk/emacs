@@ -25,7 +25,7 @@
 (use-package color-theme-sanityinc-solarized
   :ensure t
   :init
-  (load-theme 'sanityinc-solarized-light t))
+  (load-theme 'zenburn t))
 
 
 ;; frame
@@ -146,12 +146,31 @@
   :config
   (projectile-global-mode))
 
+(use-package cider
+  :ensure t)
+
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+
+(setq auto-save-default nil)
+
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+(defun my-irony-mode-hook ()
+  "Irony hooks."
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(blink-cursor-mode nil)
  '(cursor-type (quote bar))
  '(inhibit-startup-screen t)
  '(tab-width 4))
