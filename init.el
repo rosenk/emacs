@@ -6,7 +6,7 @@
 
 ;;; Code:
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+             '("melpa-stable" . "http://melpa.org/packages/") t)
 (package-initialize) ;; You might already have this line
 
 ;; make sure the use-package package is installed
@@ -22,7 +22,7 @@
 
 
 ;; load a default theme
-(use-package color-theme-sanityinc-solarized
+(use-package zenburn-theme
   :ensure t
   :init
   (load-theme 'zenburn t))
@@ -91,7 +91,9 @@
   (add-hook 'prog-mode-hook 'flycheck-mode))
 
 (use-package haskell-mode
-  :ensure t)
+  :ensure t
+  :config
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation))
 
 (use-package windmove
   :init (windmove-default-keybindings 'meta))
@@ -149,22 +151,19 @@
 (use-package cider
   :ensure t)
 
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'objc-mode-hook 'irony-mode)
+(use-package rtags
+  :ensure t)
+
+(use-package cmake-ide
+  :ensure t
+  :config
+  (cmake-ide-setup)
+  :bind ([F9] . cmake-ide-compile))
 
 (setq auto-save-default nil)
 
-;; replace the `completion-at-point' and `complete-symbol' bindings in
-;; irony-mode's buffers by irony-mode's function
-(defun my-irony-mode-hook ()
-  "Irony hooks."
-  (define-key irony-mode-map [remap completion-at-point]
-    'irony-completion-at-point-async)
-  (define-key irony-mode-map [remap complete-symbol]
-    'irony-completion-at-point-async))
-(add-hook 'irony-mode-hook 'my-irony-mode-hook)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+(setq compilation-scroll-output t)
+(fset 'yes-or-no-p 'y-or-n-p)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
