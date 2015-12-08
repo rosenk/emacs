@@ -30,6 +30,7 @@
 
 ;; frame
 (use-package frame
+  :ensure nil
   :config
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
   (tool-bar-mode 0)
@@ -146,7 +147,8 @@
 (use-package projectile
   :ensure t
   :config
-  (projectile-global-mode))
+  (projectile-global-mode)
+  :bind ("<C-tab>" . projectile-find-other-file))
 
 (use-package cider
   :ensure t)
@@ -158,21 +160,39 @@
   :ensure t
   :config
   (cmake-ide-setup)
-  :bind ([F9] . cmake-ide-compile))
+  :bind ([f9] . recompile))
+
+(use-package indent
+  :ensure nil
+  :bind ("<backtab>" . indent-rigidly-left-to-tab-stop))
+
 
 (setq auto-save-default nil)
 
 (setq compilation-scroll-output t)
 (fset 'yes-or-no-p 'y-or-n-p)
 
+(delete-selection-mode)
+(cua-mode)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(cmake-ide-rc-executable "~/dev/rtags/build/bin/rc")
+ '(cmake-ide-rdm-executable "~/dev/rtags/build/bin/rdm")
  '(cursor-type (quote bar))
  '(inhibit-startup-screen t)
- '(tab-width 4))
+ '(rtags-path "~/dev/rtags/build/bin/")
+ '(safe-local-variable-values
+   (quote
+	((cmake-ide-rc-executable . "~/dev/rtags/build/bin/rc")
+	 (cmake-ide-rdm-executable . "~/dev/rtags/build/bin/rdm")
+	 (cmake-ide-dir . "/home/rosen/projects/g2s/buildninja"))))
+ '(tab-width 4)
+ '(transient-mark-mode nil)
+ '(truncate-lines t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
